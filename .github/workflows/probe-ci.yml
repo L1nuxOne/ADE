@@ -1,0 +1,15 @@
+name: PathProbe CI
+on:
+  push:
+    branches: ['lab/pp-*']
+  pull_request:
+    branches: ['lab/pp-*']
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./actions/probe-ci
+
