@@ -18,6 +18,9 @@ for D in */; do
 
   mkdir -p .probe
 
+  # Ensure local package imports (e.g., `import impl`) resolve
+  export PYTHONPATH=.:${PYTHONPATH:-}
+
   # Tests
   pytest -q --maxfail=1 --disable-warnings \
     --json-report --json-report-file=.probe/pytest.json || true
