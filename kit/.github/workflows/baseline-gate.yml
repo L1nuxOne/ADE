@@ -1,0 +1,34 @@
+name: Baseline Gate
+on:
+  pull_request:
+    types: [opened, edited, synchronize, labeled, unlabeled, reopened]
+permissions:
+  pull-requests: read
+  contents: read
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Block optimization without baseline proof
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const title = (pr.title || "").toLowerCase();
+            const body  = (pr.body  || "").toLowerCase();
+            const labels = (pr.labels || []).map(l => l.name.toLowerCase());
+
+            const looksOptimizing =
+              title.startsWith("perf:") ||
+              labels.includes("optimize") ||
+              (body.includes("phase (choose one)") && body.includes("optimization"));
+
+            if (!looksOptimizing) return;
+
+            const hasBaselineProof =
+              body.includes("- [x] baseline verified") ||
+              (body.includes("baseline verified") && (body.includes("http") || body.includes(".agents/receipts/")));
+
+            if (!hasBaselineProof) {
+              core.setFailed("Optimization PR blocked: check 'Baseline verified' and include proof (CI URL or receipt path).");
+            }
