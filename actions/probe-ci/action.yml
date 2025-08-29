@@ -12,7 +12,14 @@ runs:
         cd "${{ github.workspace }}/experiments/pathprobe"
         chmod +x probe_run.sh
         ./probe_run.sh
+    - id: sanitize
+      shell: bash
+      run: |
+        set -euo pipefail
+        ref="${{ github.ref_name }}"
+        safe_ref="${ref//\//-}"
+        echo "ref=$safe_ref" >> "$GITHUB_OUTPUT"
     - uses: actions/upload-artifact@v4
       with:
-        name: probe-${{ replace(github.ref_name, '/', '-') }}
+        name: probe-${{ steps.sanitize.outputs.ref }}
         path: experiments/pathprobe/**/probe_report.json
