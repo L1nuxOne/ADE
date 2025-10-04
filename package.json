@@ -1,0 +1,14 @@
+{
+  "name": "ade",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@9",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "pnpm -r build || echo no-build",
+    "test": "pnpm -r test || echo no-tests",
+    "dev": "echo 'ADE dev placeholder (add apps/ade-tauri next)'"
+  }
+}
