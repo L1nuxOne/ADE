@@ -12,6 +12,9 @@
 - `packages/*` – placeholders for engines, bridges, detectors, workflows, and cloud shim code.
 - `docs/` – seed for ade.l1nux.one documentation (CNAME + landing page).
 
+## Legacy
+- `legacy/ade-v0/` – quarantined ADE v0 artifacts kept for reference only (no new imports).
+
 ## TODOs
 - TODO: add workspace packages and link real build/test scripts.
 - TODO: publish detailed docs once components are implemented.
