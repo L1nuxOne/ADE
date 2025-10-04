@@ -1,20 +1,20 @@
-# l1nuxone / agentic-kit (v1.0)
+# ADE — Agentic Dev Environment
 
-A self-contained **Agentic Development Environment (ADE)** kit you can import into any repo and one-click boot on a fresh machine.
+`L1nuxOne/ade` is the bootstrap monorepo for the Agentic Dev Environment, providing a pnpm workspace, placeholder package scaffolding, starter docs, and green-by-default CI so future engines can land smoothly.
 
-Included:
-- **PathProbe v0.2** (cloud pathfinding with per-probe venv, fixtures, metrics)
-- **Baseline-First** (PR template + baseline gate + proof receipts)
-- **Reusable CI action** for probes
-- **Protocols**: UTE (Universal Task Envelope), SCP (Shared Context Protocol)
-- **Installer** `install.sh` to import kit into any target repo
+## Local development
+- `pnpm install` – installs workspace dependencies once packages arrive.
+- `pnpm build` – runs workspace builds (prints `no-build` until packages add scripts).
+- `pnpm test` – runs workspace tests (prints `no-tests` until suites exist).
 
-## Quick use (import into any target repo)
-```bash
-curl -fsSL https://raw.githubusercontent.com/l1nuxone/agentic-kit/main/install.sh | bash
-git add -A && git commit -m "chore: add l1nuxone agentic-kit (v1.0)" && git push
-```
+## Layout
+- `apps/ade-tauri` – TODO: wire Tauri shell when the desktop app lands.
+- `packages/*` – placeholders for engines, bridges, detectors, workflows, and cloud shim code.
+- `docs/` – seed for ade.l1nux.one documentation (CNAME + landing page).
 
-Then create branches `lab/pp-001-a`, `lab/pp-001-b` from the template under `experiments/pathprobe/template/`, push, and let CI compare `probe_report.json`. Implement the winner locally with real tests & `scripts/prove.sh`.
+## Legacy
+- `legacy/ade-v0/` – quarantined ADE v0 artifacts kept for reference only (no new imports).
 
-```
+## TODOs
+- TODO: add workspace packages and link real build/test scripts.
+- TODO: publish detailed docs once components are implemented.

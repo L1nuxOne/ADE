@@ -1,2 +1,34 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# logs
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# builds
+build/
+dist/
+out/
+coverage/
+
+# editors and system
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# env
+.env
+.env.*
+
+# rust / tauri targets
+**/src-tauri/target/
+**/src-tauri/**/target/
+**/src-tauri/Cargo.lock
+
+# experiments (legacy)
 experiments/pathprobe/**/.venv/
 experiments/pathprobe/**/.probe/
