@@ -1,96 +1,107 @@
 #!/usr/bin/env node
 import process from "node:process";
 
+import { cac } from "cac";
+
 import { cloudClient } from "./client";
 
-function printHelp(): void {
-  console.log(`ade-cloud usage:\n  list [--json]\n  show <id> [--json]\n  diff <id>\n  apply <id> [--branch <name>] [--three-way]`);
-}
+type CommonOptions = {
+  json?: boolean;
+};
 
-async function main() {
-  const args = process.argv.slice(2);
-  const command = args.shift();
-
-  if (!command || command === "--help" || command === "-h") {
-    printHelp();
-    return;
-  }
-
+async function run() {
   const client = cloudClient();
+  const cli = cac("ade-cloud");
 
-  try {
-    switch (command) {
-      case "list": {
-        const json = args.includes("--json");
+  cli
+    .command("list", "List available cloud tasks")
+    .option("--json", "Output JSON")
+    .action(async (options: CommonOptions) => {
+      try {
         const tasks = await client.list();
-        if (json) {
+        if (options.json) {
           console.log(JSON.stringify(tasks, null, 2));
-        } else {
-          for (const task of tasks) {
-            console.log(`${task.id}\t${task.title}\t${task.status ?? "unknown"}`);
-          }
+          return;
         }
-        break;
-      }
-      case "show": {
-        const id = args[0];
-        if (!id) {
-          throw new Error("show requires an id");
+        for (const task of tasks) {
+          console.log(`${task.id}\t${task.title}\t${task.status ?? "unknown"}`);
         }
-        const json = args.includes("--json");
-        const detail = await client.show(id);
-        if (json) {
-          console.log(JSON.stringify(detail, null, 2));
-        } else {
-          console.log(`${detail.id}: ${detail.title}`);
-          console.log(detail.description ?? "");
-          for (const turn of detail.conversation) {
-            console.log(`[${turn.role}] ${turn.content}`);
-          }
-        }
-        break;
-      }
-      case "diff": {
-        const id = args[0];
-        if (!id) {
-          throw new Error("diff requires an id");
-        }
-        const diff = await client.diff(id);
-        process.stdout.write(diff);
-        if (!diff.endsWith("\n")) {
-          process.stdout.write("\n");
-        }
-        break;
-      }
-      case "apply": {
-        const id = args[0];
-        if (!id) {
-          throw new Error("apply requires an id");
-        }
-        let branch: string | undefined;
-        let threeWay = false;
-        for (let i = 1; i < args.length; i++) {
-          const arg = args[i];
-          if (arg === "--branch") {
-            branch = args[i + 1];
-            i++;
-          } else if (arg === "--three-way") {
-            threeWay = true;
-          }
-        }
-        const result = await client.apply(id, { branch, threeWay });
-        console.log(JSON.stringify(result, null, 2));
-        break;
-      }
-      default:
-        printHelp();
+      } catch (error) {
+        console.error(error instanceof Error ? error.message : error);
         process.exitCode = 1;
-        break;
-    }
-  } catch (error) {
-    console.error((error as Error).message);
-    process.exitCode = 1;
+      }
+    });
+
+  cli
+    .command("show <id>", "Show details for a task")
+    .option("--json", "Output JSON")
+    .action(async (id: string, options: CommonOptions) => {
+      try {
+        const detail = await client.show(id);
+        if (options.json) {
+          console.log(JSON.stringify(detail, null, 2));
+          return;
+        }
+        console.log(`${detail.id}: ${detail.title}`);
+        console.log(detail.description ?? "");
+        for (const turn of detail.conversation) {
+          console.log(`[${turn.role}] ${turn.content}`);
+        }
+      } catch (error) {
+        console.error(error instanceof Error ? error.message : error);
+        process.exitCode = 1;
+      }
+    });
+
+  cli
+    .command("diff <id>", "Print diff for a task")
+    .action(async (id: string) => {
+      try {
+        const diff = await client.diff(id);
+        process.stdout.write(diff.endsWith("\n") ? diff : `${diff}\n`);
+      } catch (error) {
+        console.error(error instanceof Error ? error.message : error);
+        process.exitCode = 1;
+      }
+    });
+
+  cli
+    .command("apply <id>", "Apply a task patch")
+    .option("--branch <name>", "Target branch name")
+    .option("--three-way", "Force three-way merge", { default: false })
+    .option("--json", "Output JSON")
+    .action(
+      async (
+        id: string,
+        options: { branch?: string; threeWay?: boolean; json?: boolean },
+      ) => {
+        try {
+          const result = await client.apply(id, {
+            branch: options.branch,
+            threeWay: Boolean(options.threeWay),
+          });
+          if (options.json) {
+            console.log(JSON.stringify(result, null, 2));
+          } else {
+            console.log(`Applied task ${id} on branch ${result.branch}`);
+          }
+        } catch (error) {
+          console.error(error instanceof Error ? error.message : error);
+          process.exitCode = 1;
+        }
+      },
+    );
+
+  cli.help();
+
+  const parsed = cli.parse(process.argv);
+
+  if (!cli.matchedCommand && parsed.args.length === 0) {
+    cli.outputHelp();
   }
 }
 
-void main();
+run().catch((error) => {
+  console.error(error instanceof Error ? error.message : error);
+  process.exitCode = 1;
+});

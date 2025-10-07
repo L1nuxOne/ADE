@@ -19,37 +19,8 @@ export interface JsonlParser<T> {
 export function createJsonlParser<T>(onValue: JsonlValueHandler<T>): JsonlParser<T> {
   let buffer = "";
 
-  const parse: JsonlParser<T> = ((chunk: Buffer | string) => {
-    buffer += chunk.toString();
-
-    while (true) {
-      const newlineIndex = buffer.indexOf("\n");
-      if (newlineIndex === -1) {
-        break;
-      }
-
-      const line = buffer.slice(0, newlineIndex).trim();
-      buffer = buffer.slice(newlineIndex + 1);
-
-      if (!line) {
-        continue;
-      }
-
-      try {
-        onValue(JSON.parse(line) as T);
-      } catch (error) {
-        throw new JsonlParseError(
-          `Failed to parse JSONL line: ${(error as Error).message}`,
-          line,
-        );
-      }
-    }
-  }) as JsonlParser<T>;
-
-  parse.flush = () => {
-    const line = buffer.trim();
-    buffer = "";
-
+  const parseLine = (rawLine: string) => {
+    const line = rawLine.trim();
     if (!line) {
       return;
     }
@@ -62,6 +33,28 @@ export function createJsonlParser<T>(onValue: JsonlValueHandler<T>): JsonlParser
         line,
       );
     }
+  };
+
+  const parse: JsonlParser<T> = ((chunk: Buffer | string) => {
+    buffer += chunk.toString();
+
+    while (true) {
+      const newlineIndex = buffer.indexOf("\n");
+      if (newlineIndex === -1) {
+        break;
+      }
+
+      const line = buffer.slice(0, newlineIndex);
+      buffer = buffer.slice(newlineIndex + 1);
+
+      parseLine(line);
+    }
+  }) as JsonlParser<T>;
+
+  parse.flush = () => {
+    const line = buffer;
+    buffer = "";
+    parseLine(line);
   };
 
   return parse;

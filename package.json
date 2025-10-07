@@ -7,8 +7,8 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "pnpm -r --filter '@ade/*' build || echo no-build",
-    "test": "vitest run || echo no-tests",
+    "build": "pnpm -r --filter '@ade/*' build",
+    "test": "vitest run",
     "dev": "echo 'ADE dev placeholder (add apps/ade-tauri next)'",
     "smoke:engine": "bash scripts/cloud/env.sh && tsx tools/engine-smoke.ts",
     "smoke:cloud": "ade-cloud list --json || true"

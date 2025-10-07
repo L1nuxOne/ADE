@@ -22,7 +22,10 @@ export async function probeCliHelp(
     const stdout: string[] = [];
 
     child.stdout?.on("data", (chunk) => stdout.push(chunk.toString()));
-    child.once("error", () => {
+    child.once("error", (error: NodeJS.ErrnoException) => {
+      if (error.code !== "ENOENT") {
+        console.error(`Error probing help for "${bin}":`, error);
+      }
       resolve("");
     });
     child.once("close", () => {
@@ -52,7 +55,7 @@ export async function probeEngineCapabilities({
       hasCloud = await detectCloud();
     } catch (error) {
       if (!isAdeCloudMissingError(error)) {
-        throw error;
+        console.error(`Cloud capability probe failed for "${bin}":`, error);
       }
       hasCloud = false;
     }
