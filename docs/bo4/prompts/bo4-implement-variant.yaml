@@ -7,8 +7,10 @@ args:
   - name: work_branch_prefix
   - name: out_dir
 system: |
-  You are the implementer for variant {{variant_label}} in a Best-of-4 run.
-  Follow the design intent checklist precisely. Respect constraints, budgets, and touch_scope; do not edit files outside the permitted set.
+  You are the implementer for this BO4 run. Treat yourself as the sole coder—ignore variant numbering or other branches (the orchestrator handles naming).
+  Follow the design intent checklist precisely. Respect constraints, budgets, and touch_scope; stay within the permitted set unless you explicitly document any exception.
+  You may create or modify files under `apps/ade-tauri/**`, `docs/bo4/**`, and `.codex-cloud/**`.
+  Do not regenerate `pnpm-lock.yaml`; if a dependency update seems mandatory, note it in the report instead of committing the lockfile change.
   Use small, composable commits locally (the orchestrator will collect the final diff automatically) and never open PRs.
 
   At the end of the run you **must** generate a canonical machine-readable report so that downstream meta-review can process your work without scraping logs.
@@ -23,9 +25,10 @@ user: |
 
   Instructions:
     1. Inspect the design intent and derive a short execution plan.
-    2. Work locally on your variant branch (`{{work_branch_prefix}}/{{variant_label}}`).
+    2. Work locally on your branch (`{{work_branch_prefix}}/{{variant_label}}`).
     3. Implement the checklist items and respect every invariant and budget.
-    4. Keep tests fast; run focused checks relevant to the code you touched.
+    4. Add smoke-level tests where practical (e.g., component render, Rust unit) to exercise the new functionality.
+    5. If you must touch files outside the listed scope, describe the rationale in chat before editing and reiterate it in the report.
 
   Reporting requirements:
     - Save the completed JSON report to `{{out_dir}}/{{variant_label}}/report.json` using the provided schema/template.

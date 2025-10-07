@@ -35,9 +35,15 @@ constraints:
   invariants:
     - "No submodules"
     - "No tracked file writes in Cloud Setup"
+    - "Do not regenerate pnpm-lock.yaml; if a dependency change is truly required, note it in the report and leave the lockfile untouched"
+    - "If you must touch files outside the allowed scope, state the rationale in the report before making the change"
 touch_scope:
-  include: ["apps/ade-tauri/src/**", "apps/ade-tauri/src-tauri/**"]
-  avoid:   ["legacy/**"]
+  include:
+    - apps/ade-tauri/**
+    - docs/bo4/**
+    - .codex-cloud/**
+  avoid:
+    - legacy/**
 oracles: []
 tests_expectations:
   intent_coverage:
