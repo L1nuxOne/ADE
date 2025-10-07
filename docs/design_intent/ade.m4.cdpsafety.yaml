@@ -1,0 +1,25 @@
+id: ade.m4.cdpsafety
+title: "M4-02 — CDP Safety Defaults"
+summary: >
+  Ephemeral Chrome profile, read-only by default; elevation toggle with warning.
+
+checklist:
+  - id: P1
+    name: "Safe launch"
+    importance: MUST
+    acceptance:
+      - "Starts Chrome with throwaway profile and safe flags"
+  - id: P2
+    name: "Elevation"
+    importance: MUST
+    acceptance:
+      - "Explicit toggle flips to write mode"
+
+constraints:
+  invariants:
+    - "Never reuse real profile by default"
+touch_scope:
+  include: ['packages/bridges/**','apps/ade-tauri/src/**']
+  avoid:   ['legacy/**']
+oracles: []
+tests_expectations: {}

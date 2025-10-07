@@ -1,0 +1,20 @@
+id: ade.m4.prhealth
+title: "M4-04 — PR Concept Health Comment"
+summary: >
+  Generate PR comment with conceptual diff, parity deltas, and oracles result (read-only MCP until elevated).
+
+checklist:
+  - id: P1
+    name: "Comment generator"
+    importance: MUST
+    acceptance:
+      - "Produces a well-structured comment artifact ready to post"
+
+constraints:
+  invariants:
+    - "Only post when elevated"
+touch_scope:
+  include: ['packages/**','apps/ade-tauri/src/**']
+  avoid:   ['legacy/**']
+oracles: []
+tests_expectations: {}

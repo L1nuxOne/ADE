@@ -1,0 +1,30 @@
+id: ade.m1.layout
+title: "M1-04 — Settings & Layout"
+summary: >
+  Persistent settings (Zustand), Engine picker (stub), and grid layout:
+  Left(Explorers), Center(Diff/Result/Conversation), Bottom(Terminals), Right(Actions).
+
+checklist:
+  - id: P1
+    name: "Settings store"
+    importance: MUST
+    acceptance:
+      - "Persists to ~/.ade/config.json"
+  - id: P2
+    name: "Engine picker (stub)"
+    importance: MUST
+    acceptance:
+      - "Values: none|stub; survives restart"
+  - id: P3
+    name: "Layout frame"
+    importance: MUST
+    acceptance:
+      - "Resizable panes; keyboard shortcuts Ctrl/Cmd+1..2, backtick for terminals"
+
+constraints:
+  invariants: ["No global state leaks"]
+touch_scope:
+  include: ["apps/ade-tauri/src/**"]
+  avoid:   ["legacy/**"]
+oracles: []
+tests_expectations: {}

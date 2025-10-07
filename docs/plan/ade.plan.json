@@ -1,0 +1,235 @@
+{
+  "version": "0.2",
+  "meta": {
+    "repo": "L1nuxOne/ade",
+    "base_branch": "main",
+    "engine_default": "code",
+    "out_root": ".codex-cloud",
+    "worktrees_root": "../_bo4",
+    "prompts": {
+      "implement_variant": "bo4.implement.variant",
+      "meta_review": "bo4.meta.review",
+      "transplant_coder": "bo4.transplant.coder"
+    },
+    "paths": {
+      "design_intent_dir": "docs/design_intent"
+    }
+  },
+  "pipelines": {
+    "bo4": {
+      "best_of": 4,
+      "steps": []
+    }
+  },
+  "tasks": [
+    {
+      "id": "m0-01.engine",
+      "title": "M0 — Engine Abstraction (code/codex/stub)",
+      "milestone": "M0",
+      "kind": "polish_local",
+      "status": "done",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m0-02.jsonl-flush",
+      "title": "M0 — Fix JSONL EOF flush + tests",
+      "milestone": "M0",
+      "kind": "polish_local",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m1-01.terminals",
+      "title": "M1-01 — Terminals (Me + Engine)",
+      "milestone": "M1",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m1.terminals.yaml",
+      "out_dir": ".codex-cloud/m1-01-terminals",
+      "finalize_branch": "bo4/m1-01/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m1-02.files",
+      "title": "M1-02 — File Explorer",
+      "milestone": "M1",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m1.files.yaml",
+      "out_dir": ".codex-cloud/m1-02-files",
+      "finalize_branch": "bo4/m1-02/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m1-03.concepts",
+      "title": "M1-03 — Concept Explorer (bootstrap)",
+      "milestone": "M1",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m1.concepts.yaml",
+      "out_dir": ".codex-cloud/m1-03-concepts",
+      "finalize_branch": "bo4/m1-03/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m1-04.layout",
+      "title": "M1-04 — Settings & Layout",
+      "milestone": "M1",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m1.layout.yaml",
+      "out_dir": ".codex-cloud/m1-04-layout",
+      "finalize_branch": "bo4/m1-04/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m2-01.detectors",
+      "title": "M2-01 — L1 Detectors (6 kinds)",
+      "milestone": "M2",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m2.detectors.yaml",
+      "out_dir": ".codex-cloud/m2-01-detectors",
+      "finalize_branch": "bo4/m2-01/winner",
+      "depends_on": [
+        "m1-03.concepts"
+      ],
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m2-02.crosswalk",
+      "title": "M2-02 — Crosswalk & Reconciliation",
+      "milestone": "M2",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m2.crosswalk.yaml",
+      "out_dir": ".codex-cloud/m2-02-crosswalk",
+      "finalize_branch": "bo4/m2-02/winner",
+      "depends_on": [
+        "m2-01.detectors"
+      ],
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m2-03.l1-suite",
+      "title": "M2-03 — L1 Suite Runner (param by L2)",
+      "milestone": "M2",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m2.l1suite.yaml",
+      "out_dir": ".codex-cloud/m2-03-l1-suite",
+      "finalize_branch": "bo4/m2-03/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m2-04.oracles",
+      "title": "M2-04 — TF-Lang Oracles",
+      "milestone": "M2",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m2.oracles.yaml",
+      "out_dir": ".codex-cloud/m2-04-oracles",
+      "finalize_branch": "bo4/m2-04/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m3-01.conceptual-diff",
+      "title": "M3-01 — Conceptual Diff",
+      "milestone": "M3",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m3.conceptualdiff.yaml",
+      "out_dir": ".codex-cloud/m3-01-conceptual-diff",
+      "finalize_branch": "bo4/m3-01/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m3-02.github-mcp",
+      "title": "M3-02 — GitHub MCP (read-only)",
+      "milestone": "M3",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m3.githubmcp.yaml",
+      "out_dir": ".codex-cloud/m3-02-github-mcp",
+      "finalize_branch": "bo4/m3-02/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m3-03.workflow-runner",
+      "title": "M3-03 — Workflow Runner (YAML)",
+      "milestone": "M3",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m3.workflow.yaml",
+      "out_dir": ".codex-cloud/m3-03-workflow-runner",
+      "finalize_branch": "bo4/m3-03/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m3-04.cloud-bridge",
+      "title": "M3-04 — Cloud BO4 Bridge + Apply",
+      "milestone": "M3",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m3.cloudbridge.yaml",
+      "out_dir": ".codex-cloud/m3-04-cloud-bridge",
+      "finalize_branch": "bo4/m3-04/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m3-05.worktrees-matrix",
+      "title": "M3-05 — Worktrees + Test Matrix",
+      "milestone": "M3",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m3.worktrees.yaml",
+      "out_dir": ".codex-cloud/m3-05-worktrees-matrix",
+      "finalize_branch": "bo4/m3-05/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m4-01.guardrails",
+      "title": "M4-01 — Guardrails Panel",
+      "milestone": "M4",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m4.guardrails.yaml",
+      "out_dir": ".codex-cloud/m4-01-guardrails",
+      "finalize_branch": "bo4/m4-01/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m4-02.cdp-safety",
+      "title": "M4-02 — CDP Safety Defaults",
+      "milestone": "M4",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m4.cdpsafety.yaml",
+      "out_dir": ".codex-cloud/m4-02-cdp-safety",
+      "finalize_branch": "bo4/m4-02/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m4-03.cards-from-evidence",
+      "title": "M4-03 — Add L2 Card from Evidence",
+      "milestone": "M4",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m4.cards.yaml",
+      "out_dir": ".codex-cloud/m4-03-cards-from-evidence",
+      "finalize_branch": "bo4/m4-03/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    },
+    {
+      "id": "m4-04.pr-concept-health",
+      "title": "M4-04 — PR Concept Health Comment",
+      "milestone": "M4",
+      "kind": "bo4_pipeline",
+      "design_intent": "docs/design_intent/ade.m4.prhealth.yaml",
+      "out_dir": ".codex-cloud/m4-04-pr-concept-health",
+      "finalize_branch": "bo4/m4-04/winner",
+      "status": "pending",
+      "owner": "orchestrator"
+    }
+  ]
+}

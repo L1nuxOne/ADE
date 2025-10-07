@@ -1,0 +1,20 @@
+id: ade.m4.guardrails
+title: "M4-01 — Guardrails Panel"
+summary: >
+  Always-on checks: layer/ID/parity/intent/strength/oracles with badges & panel.
+
+checklist:
+  - id: P1
+    name: "Panel + badges"
+    importance: MUST
+    acceptance:
+      - "Each guard surfaces as a badge and summarised panel"
+
+constraints:
+  invariants:
+    - "Guards run fast; async hydration allowed"
+touch_scope:
+  include: ['apps/ade-tauri/src/**','packages/**']
+  avoid:   ['legacy/**']
+oracles: []
+tests_expectations: {}

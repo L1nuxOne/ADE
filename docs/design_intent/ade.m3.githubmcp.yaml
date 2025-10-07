@@ -1,0 +1,26 @@
+id: ade.m3.githubmcp
+title: "M3-02 — GitHub MCP (read-only)"
+summary: >
+  List PRs/issues/files; fetch PR base/head SHAs; no writes until elevated.
+
+checklist:
+  - id: P1
+    name: "MCP client wiring"
+    importance: MUST
+    acceptance:
+      - "Can list PRs/issues/files read-only"
+  - id: P2
+    name: "PR view"
+    importance: MUST
+    acceptance:
+      - "Load PR SHAs and show conceptual diff"
+
+constraints:
+  invariants:
+    - "Read-only by default"
+    - "No writes without elevation"
+touch_scope:
+  include: ['packages/bridges/**','apps/ade-tauri/src/**']
+  avoid:   ['legacy/**']
+oracles: []
+tests_expectations: {}

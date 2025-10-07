@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BO4 Meta Review Report",
+  "type": "object",
+  "properties": {
+    "design_intent_id": {
+      "type": "string"
+    },
+    "base": {
+      "type": "string"
+    },
+    "scorecard": {
+      "type": "object"
+    },
+    "graft_plan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item": {
+            "type": "string"
+          },
+          "from_branch": {
+            "type": "string"
+          },
+          "to_branch": {
+            "type": "string"
+          },
+          "method": {
+            "enum": [
+              "patch",
+              "semantic"
+            ]
+          },
+          "anchors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "loc": {
+                  "type": "object",
+                  "properties": {
+                    "line_start": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "line_end": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "line_start",
+                    "line_end"
+                  ]
+                },
+                "symbol": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "path"
+              ]
+            }
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tests": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "oracles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "risks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "item",
+          "from_branch",
+          "to_branch",
+          "method"
+        ]
+      }
+    },
+    "post_steps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "design_intent_id",
+    "base",
+    "graft_plan"
+  ]
+}

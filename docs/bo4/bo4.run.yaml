@@ -1,0 +1,27 @@
+version: 0.1
+defaults:
+  prompt_id: bo4.implement.variant
+  best_of: 4
+  base_branch: main
+  out_root: .codex-cloud
+
+runs:
+  - id: m1-01.terminals
+    label: "M1-01 Terminals (Me + Engine)"
+    design_intent: docs/design_intent/ade.m1.terminals.yaml
+    out_dir: .codex-cloud/m1-01-terminals
+
+  - id: m1-02.files
+    label: "M1-02 File Explorer"
+    design_intent: docs/design_intent/ade.m1.files.yaml
+    out_dir: .codex-cloud/m1-02-files
+
+  - id: m1-03.concepts
+    label: "M1-03 Concept Explorer (bootstrap)"
+    design_intent: docs/design_intent/ade.m1.concepts.yaml
+    out_dir: .codex-cloud/m1-03-concepts
+
+  - id: m1-04.layout
+    label: "M1-04 Settings & Layout"
+    design_intent: docs/design_intent/ade.m1.layout.yaml
+    out_dir: .codex-cloud/m1-04-layout

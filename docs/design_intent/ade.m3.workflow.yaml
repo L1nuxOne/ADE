@@ -1,0 +1,21 @@
+id: ade.m3.workflow
+title: "M3-03 — Workflow Runner (YAML)"
+summary: >
+  Run declarative workflows locally or via engine; stream JSONL artifacts.
+
+checklist:
+  - id: P1
+    name: "Loader & runner"
+    importance: MUST
+    acceptance:
+      - "Loads ~/.codex-ide/workflows/*.yaml"
+      - "Runs steps with streamed output"
+
+constraints:
+  invariants:
+    - "No submodules"
+touch_scope:
+  include: ['packages/workflows/**','apps/ade-tauri/src/**']
+  avoid:   ['legacy/**']
+oracles: []
+tests_expectations: {}

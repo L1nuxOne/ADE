@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Variant Report",
+  "type": "object",
+  "properties": {
+    "variant": {
+      "type": "string"
+    },
+    "base_commit": {
+      "type": "string"
+    },
+    "work_branch": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "checklist_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "implemented",
+              "partial",
+              "skipped",
+              "rejected"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "object",
+            "properties": {
+              "files": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "reason": {
+                      "type": "string"
+                    },
+                    "risk": {
+                      "enum": [
+                        "low",
+                        "med",
+                        "high"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "path"
+                  ]
+                }
+              },
+              "spans": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "start": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "end": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "symbol": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "start",
+                    "end"
+                  ]
+                }
+              }
+            }
+          },
+          "tests": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "oracles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "status"
+        ]
+      }
+    },
+    "diff_stats": {
+      "type": "object",
+      "properties": {
+        "files_changed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "insertions": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "deletions": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "low",
+              "med",
+              "high"
+            ]
+          }
+        },
+        "required": [
+          "text"
+        ]
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "variant",
+    "work_branch",
+    "checklist_results"
+  ]
+}

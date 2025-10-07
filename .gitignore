@@ -25,6 +25,10 @@ tsconfig.tsbuildinfo
 .env
 .env.*
 
+# codex orchestration artifacts
+.codex-cloud/
+.codex-orchestrator/
+
 # rust / tauri targets
 **/src-tauri/target/
 **/src-tauri/**/target/

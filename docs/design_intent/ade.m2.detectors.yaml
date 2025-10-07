@@ -1,0 +1,28 @@
+id: ade.m2.detectors
+title: "M2-01 — L1 Detectors (6 kinds)"
+summary: >
+  Project-agnostic detectors for endpoint, function, datamodel, migration, test, adapterclient; evidence spans.
+
+checklist:
+  - id: P1
+    name: "Ripgrep rules + exclusion guards"
+    importance: MUST
+    acceptance:
+      - "Rules load from packages/detectors/src/rules/*.yaml"
+      - "Exclude obvious false positives"
+  - id: P2
+    name: "Scan runner"
+    importance: MUST
+    acceptance:
+      - "Completes < 5s on medium repo"
+      - "Writes .codex-ide/index/l1_catalogue.json with spans"
+
+constraints:
+  invariants:
+    - "No submodules"
+    - "No network calls"
+touch_scope:
+  include: ['packages/detectors/**','apps/ade-tauri/src/**']
+  avoid:   ['legacy/**']
+oracles: []
+tests_expectations: {}

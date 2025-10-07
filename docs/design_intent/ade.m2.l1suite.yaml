@@ -1,0 +1,25 @@
+id: ade.m2.l1suite
+title: "M2-03 — L1 Suite Runner (param by L2)"
+summary: >
+  One suite per L1 class; parameterize tests by discovered L2 nodes; parity guard.
+
+checklist:
+  - id: P1
+    name: "Test discovery & parametrization"
+    importance: MUST
+    acceptance:
+      - "Runs tests per L1 class over all L2 nodes"
+  - id: P2
+    name: "Parity guard"
+    importance: MUST
+    acceptance:
+      - "Fails if detected(L2) != executed(param cases)"
+
+constraints:
+  invariants:
+    - "No network calls"
+touch_scope:
+  include: ['tests/**','apps/ade-tauri/src/**']
+  avoid:   ['legacy/**']
+oracles: []
+tests_expectations: {}

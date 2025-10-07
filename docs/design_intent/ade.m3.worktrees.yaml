@@ -1,0 +1,25 @@
+id: ade.m3.worktrees
+title: "M3-05 — Worktrees + Test Matrix"
+summary: >
+  Apply 4 diffs as worktrees; run L1 suites + oracles per branch; compute pass matrix.
+
+checklist:
+  - id: P1
+    name: "Worktree manager"
+    importance: MUST
+    acceptance:
+      - "Creates branches bo4/var{1..4} and applies patches with 3-way fallback"
+  - id: P2
+    name: "Matrix"
+    importance: MUST
+    acceptance:
+      - "Shows pass/fail per suite & oracle per variant"
+
+constraints:
+  invariants:
+    - "No destructive git ops on main"
+touch_scope:
+  include: ['apps/ade-tauri/src/**','packages/**']
+  avoid:   ['legacy/**']
+oracles: []
+tests_expectations: {}

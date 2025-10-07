@@ -1,0 +1,26 @@
+id: ade.m2.crosswalk
+title: "M2-02 — Crosswalk & Reconciliation"
+summary: >
+  Bind file spans to L2 capability IDs; reconcile with enriched.json; mark green/yellow/red.
+
+checklist:
+  - id: P1
+    name: "Crosswalk builder"
+    importance: MUST
+    acceptance:
+      - "Produces .codex-ide/index/crosswalk.json with roles & confidence"
+  - id: P2
+    name: "Reconciliation"
+    importance: MUST
+    acceptance:
+      - "Compares against docs/capabilities/capabilities.enriched.json"
+      - "Orphans and unknowns lists available"
+
+constraints:
+  invariants:
+    - "No submodules"
+touch_scope:
+  include: ['packages/detectors/**','apps/ade-tauri/src/**']
+  avoid:   ['legacy/**']
+oracles: []
+tests_expectations: {}

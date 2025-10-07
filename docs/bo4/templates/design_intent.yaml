@@ -1,0 +1,41 @@
+id: ade.milestoneX.featureY
+title: "Milestone X – Feature Y"
+summary: >
+  High-level goal in one paragraph summarizing scope and desired outcome.
+checklist:
+  - id: P1
+    name: "Implement L1 detectors (endpoint, function, datamodel...)"
+    importance: MUST          # MUST | SHOULD | NICE
+    acceptance:
+      - "Scan completes < 5s on a medium repo"
+      - "Writes .codex-ide/index/l1_catalogue.json"
+      - "Evidence spans include file + byte offsets"
+    targets:
+      l2: ["epistemology/endpoint/*", "logic/function/*"]
+    non_goals:
+      - "No tree-sitter yet; ripgrep-first"
+  - id: P2
+    name: "Crosswalk & reconciliation vs enriched.json"
+    importance: MUST
+    acceptance:
+      - "Produces crosswalk.json with roles and confidences"
+      - "Green/yellow/red states computed"
+constraints:
+  invariants:
+    - "No submodules. No destructive history rewrites."
+    - "L0 precedence: Ontology > Methodology > Epistemology > Logic (first match wins)."
+  budgets:
+    runtime_sec: 8
+    added_deps: ["@vscode/ripgrep"]
+touch_scope:
+  include: ["packages/detectors/**", "apps/ade-tauri/src/**"]
+  avoid:   ["legacy/**"]
+observability:
+  metrics:
+    - "scan.duration_ms"
+    - "crosswalk.nodes"
+tests_expectations:
+  intent_coverage:
+    - "detector: false-positive guards present"
+oracles:
+  - "parity: detected vs executed param cases (hook later)"

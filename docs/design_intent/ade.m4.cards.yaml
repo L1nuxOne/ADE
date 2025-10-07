@@ -1,0 +1,20 @@
+id: ade.m4.cards
+title: "M4-03 — Add L2 Card from Evidence"
+summary: >
+  Generate cards/<id>.md from crosswalk evidence; update enriched.json.
+
+checklist:
+  - id: P1
+    name: "Generator"
+    importance: MUST
+    acceptance:
+      - "Creates cards and updates enriched.json consistently"
+
+constraints:
+  invariants:
+    - "No drift between enriched and cards"
+touch_scope:
+  include: ['apps/ade-tauri/src/**','docs/capabilities/**']
+  avoid:   ['legacy/**']
+oracles: []
+tests_expectations: {}

@@ -1,0 +1,26 @@
+id: ade.m2.oracles
+title: "M2-04 — TF-Lang Oracles"
+summary: >
+  Attach per-class default oracles and run tf expand/check on generated specs.
+
+checklist:
+  - id: P1
+    name: "Oracle binding"
+    importance: MUST
+    acceptance:
+      - "Default oracles attached by class and overridable by node tags"
+  - id: P2
+    name: "Runner"
+    importance: MUST
+    acceptance:
+      - "tf expand + tf check runs and reports pass/fail per node"
+
+constraints:
+  invariants:
+    - "No destructive operations"
+    - "Dry-run safe"
+touch_scope:
+  include: ['packages/**','apps/ade-tauri/src/**']
+  avoid:   ['legacy/**']
+oracles: []
+tests_expectations: {}

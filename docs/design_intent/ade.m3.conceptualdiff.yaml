@@ -1,0 +1,25 @@
+id: ade.m3.conceptualdiff
+title: "M3-01 — Conceptual Diff"
+summary: >
+  Snapshot crosswalk per SHA and compute Added/Removed/Changed concepts & bindings.
+
+checklist:
+  - id: P1
+    name: "Snapshotter"
+    importance: MUST
+    acceptance:
+      - "Writes .codex-ide/index/snapshots/<sha>.json"
+  - id: P2
+    name: "Diff view"
+    importance: MUST
+    acceptance:
+      - "Renders conceptual deltas base↔head"
+
+constraints:
+  invariants:
+    - "No submodules"
+touch_scope:
+  include: ['packages/detectors/**','apps/ade-tauri/src/**']
+  avoid:   ['legacy/**']
+oracles: []
+tests_expectations: {}

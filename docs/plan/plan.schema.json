@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ADE Orchestrator Plan v0.2",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "repo": {
+          "type": "string"
+        },
+        "base_branch": {
+          "type": "string"
+        },
+        "engine_default": {
+          "type": "string"
+        },
+        "out_root": {
+          "type": "string"
+        },
+        "worktrees_root": {
+          "type": "string"
+        },
+        "prompts": {
+          "type": "object",
+          "properties": {
+            "implement_variant": {
+              "type": "string"
+            },
+            "meta_review": {
+              "type": "string"
+            },
+            "transplant_coder": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "implement_variant",
+            "meta_review",
+            "transplant_coder"
+          ]
+        },
+        "paths": {
+          "type": "object",
+          "properties": {
+            "design_intent_dir": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "design_intent_dir"
+          ]
+        }
+      },
+      "required": [
+        "repo",
+        "base_branch",
+        "engine_default",
+        "out_root",
+        "worktrees_root",
+        "prompts",
+        "paths"
+      ]
+    },
+    "pipelines": {
+      "type": "object"
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "milestone": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "bo4_pipeline",
+              "cloud_bo4",
+              "local_meta_review",
+              "local_transplant",
+              "polish_local"
+            ]
+          },
+          "design_intent": {
+            "type": "string"
+          },
+          "out_dir": {
+            "type": "string"
+          },
+          "finalize_branch": {
+            "type": "string"
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "enum": [
+              "pending",
+              "in_progress",
+              "done",
+              "blocked"
+            ]
+          },
+          "owner": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "milestone",
+          "kind",
+          "status"
+        ]
+      }
+    }
+  },
+  "required": [
+    "version",
+    "meta",
+    "pipelines",
+    "tasks"
+  ]
+}

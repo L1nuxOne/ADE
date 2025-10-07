@@ -1,0 +1,44 @@
+id: ade.m1.terminals
+title: "M1-01 — Two terminals (Me + Engine)"
+summary: >
+  Add two terminals: Me (interactive PTY) and Engine (read-only JSONL stream).
+  Cross-platform basics with graceful errors.
+
+checklist:
+  - id: P1
+    name: "PTY backend (Tauri)"
+    importance: MUST
+    acceptance:
+      - "Spawn shell (bash/zsh on *nix, pwsh on Windows)"
+      - "Resize, SIGINT, close-to-kill work"
+      - "Errors surfaced without crash"
+    targets: []
+  - id: P2
+    name: "Terminal UI (xterm.js)"
+    importance: MUST
+    acceptance:
+      - "TerminalMe tab renders input/output"
+      - "Split view in TerminalsPane"
+  - id: P3
+    name: "Engine terminal (JSONL heartbeat)"
+    importance: MUST
+    acceptance:
+      - "Engine stub streams JSONL every ~1s"
+      - "No user input; read-only"
+  - id: P4
+    name: "Windows fallback & WSL toggle"
+    importance: SHOULD
+    acceptance:
+      - "pwsh works; WSL toggle starts `wsl -e bash` if available"
+
+constraints:
+  invariants:
+    - "No submodules"
+    - "No tracked file writes in Cloud Setup"
+touch_scope:
+  include: ["apps/ade-tauri/src/**", "apps/ade-tauri/src-tauri/**"]
+  avoid:   ["legacy/**"]
+oracles: []
+tests_expectations:
+  intent_coverage:
+    - "PTY failure path shows friendly error"

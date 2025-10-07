@@ -1,0 +1,35 @@
+id: ade.m1.files
+title: "M1-02 — File Explorer"
+summary: >
+  Left-rail repository tree with Git status and a basic unified diff viewer.
+
+checklist:
+  - id: P1
+    name: "Git status model"
+    importance: MUST
+    acceptance:
+      - "List staged/unstaged/modified/untracked via porcelain"
+  - id: P2
+    name: "Tree UI with badges"
+    importance: MUST
+    acceptance:
+      - "M/A/?/S badges visible; large repos stay responsive"
+  - id: P3
+    name: "Unified diff view"
+    importance: MUST
+    acceptance:
+      - "Clicking a file shows diff; virtualization prevents jank"
+  - id: P4
+    name: "Context actions (stage/unstage open)"
+    importance: NICE
+    acceptance:
+      - "Stage/unstage per file works; partial hunks later"
+
+constraints:
+  invariants:
+    - "No network calls; pure local Git"
+touch_scope:
+  include: ["apps/ade-tauri/src/**", "apps/ade-tauri/src-tauri/**"]
+  avoid:   ["legacy/**"]
+oracles: []
+tests_expectations: {}

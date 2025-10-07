@@ -1,0 +1,34 @@
+id: ade.m1.concepts
+title: "M1-03 — Concept Explorer (bootstrap)"
+summary: >
+  Render L0→L1→L2 from capabilities.enriched.json; open card panel; error if missing.
+
+checklist:
+  - id: P1
+    name: "Load enriched JSON"
+    importance: MUST
+    acceptance:
+      - "Parses docs/capabilities/capabilities.enriched.json (seed if missing)"
+  - id: P2
+    name: "Explorer UI"
+    importance: MUST
+    acceptance:
+      - "Four L0 groups; L1 kinds; L2 nodes list with IDs"
+  - id: P3
+    name: "Card panel"
+    importance: MUST
+    acceptance:
+      - "Click L2 → shows id/name/depends/tests/oracles"
+  - id: P4
+    name: "Create example file action"
+    importance: SHOULD
+    acceptance:
+      - "If file invalid/missing, offer to create minimal valid JSON"
+
+constraints:
+  invariants: ["No submodules"]
+touch_scope:
+  include: ["apps/ade-tauri/src/**", "docs/capabilities/**"]
+  avoid:   ["legacy/**"]
+oracles: []
+tests_expectations: {}

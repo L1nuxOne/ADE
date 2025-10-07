@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Composite Winner Report",
+  "type": "object",
+  "properties": {
+    "finalize_branch": {
+      "type": "string"
+    },
+    "base": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "from_branch": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "applied",
+              "adapted",
+              "skipped"
+            ]
+          },
+          "conflicts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "status"
+        ]
+      }
+    },
+    "tests": {
+      "type": "object"
+    },
+    "oracles": {
+      "type": "object"
+    },
+    "summary": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "finalize_branch",
+    "items"
+  ]
+}

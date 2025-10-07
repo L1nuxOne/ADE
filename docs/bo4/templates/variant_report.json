@@ -1,0 +1,46 @@
+{
+  "variant": "{{variant_label}}",
+  "summary": "One paragraph describing what this variant implemented and key constraints respected.",
+  "checklist_results": [
+    {
+      "id": "P1",
+      "status": "implemented",
+      "notes": "Summary of how the item was addressed, including any trade-offs.",
+      "evidence": {
+        "files": [
+          {
+            "path": "packages/example/src/foo.ts",
+            "reason": "Implements terminal UI rendering",
+            "risk": "med"
+          }
+        ],
+        "spans": [
+          {
+            "path": "packages/example/src/foo.ts",
+            "start": 120,
+            "end": 240,
+            "symbol": "renderTerminal"
+          }
+        ]
+      },
+      "tests": ["pnpm test --filter=foo"],
+      "oracles": ["manual-terminal-run"],
+      "notes": "Call out remaining TODO or assumptions."
+    }
+  ],
+  "diff_stats": {
+    "files_changed": 5,
+    "insertions": 220,
+    "deletions": 35
+  },
+  "risks": [
+    {
+      "id": "migrations",
+      "text": "Terminal palette detection may break on Windows shells.",
+      "severity": "med"
+    }
+  ],
+  "notes": [
+    "Any additional observations worth surfacing to meta-review."
+  ]
+}

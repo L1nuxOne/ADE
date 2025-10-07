@@ -1,0 +1,26 @@
+id: ade.m3.cloudbridge
+title: "M3-04 — Cloud BO4 Bridge + Apply"
+summary: >
+  Wire cloud.create_task/show/diff/apply; display variants and reports.
+
+checklist:
+  - id: P1
+    name: "Bridge commands"
+    importance: MUST
+    acceptance:
+      - "Can list/show/diff/apply for tasks"
+  - id: P2
+    name: "Variant viewer"
+    importance: MUST
+    acceptance:
+      - "Show 4 diffs + reports in UI"
+
+constraints:
+  invariants:
+    - "Read-only by default"
+    - "Explicit elevation for apply"
+touch_scope:
+  include: ['packages/bridges/**','apps/ade-tauri/src/**']
+  avoid:   ['legacy/**']
+oracles: []
+tests_expectations: {}
