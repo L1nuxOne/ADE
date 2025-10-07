@@ -26,6 +26,9 @@ importers:
 
   packages/bridges/code-engine:
     dependencies:
+      '@ade/bridge-shared':
+        specifier: workspace:*
+        version: link:../shared
       '@ade/cloud-shim':
         specifier: workspace:*
         version: link:../../cloud-shim
@@ -35,9 +38,18 @@ importers:
 
   packages/bridges/codex-engine:
     dependencies:
+      '@ade/bridge-shared':
+        specifier: workspace:*
+        version: link:../shared
       '@ade/cloud-shim':
         specifier: workspace:*
         version: link:../../cloud-shim
+      '@ade/engine':
+        specifier: workspace:*
+        version: link:../../engine
+
+  packages/bridges/shared:
+    dependencies:
       '@ade/engine':
         specifier: workspace:*
         version: link:../../engine

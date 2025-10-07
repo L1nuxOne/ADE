@@ -1,5 +1,5 @@
 {
-  "name": "@ade/codex-engine",
+  "name": "@ade/bridge-shared",
   "version": "0.0.1",
   "private": false,
   "main": "dist/index.js",
@@ -10,8 +10,6 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@ade/bridge-shared": "workspace:*",
-    "@ade/cloud-shim": "workspace:*",
     "@ade/engine": "workspace:*"
   }
 }

@@ -10,6 +10,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
+    "@ade/bridge-shared": "workspace:*",
     "@ade/cloud-shim": "workspace:*",
     "@ade/engine": "workspace:*"
   }
