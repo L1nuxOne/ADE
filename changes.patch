@@ -1,0 +1,154 @@
+diff --git a/packages/bridges/code-engine/src/index.ts b/packages/bridges/code-engine/src/index.ts
+index 338700f..b90f037 100644
+--- a/packages/bridges/code-engine/src/index.ts
++++ b/packages/bridges/code-engine/src/index.ts
+@@ -74,6 +74,16 @@ export class CodeEngine implements Engine {
+       }
+     }
+ 
++    try {
++      parser.flush();
++    } catch (error) {
++      child.kill();
++      throw error;
++    }
++    while (queue.length > 0) {
++      yield queue.shift()!;
++    }
++
+     const exitCode = await exitPromise;
+     if (exitCode !== 0) {
+       throw new Error(`code exec exited with code ${exitCode}: ${stderr.join("")}`);
+diff --git a/packages/bridges/codex-engine/src/index.ts b/packages/bridges/codex-engine/src/index.ts
+index 714bc9d..3b1d6f6 100644
+--- a/packages/bridges/codex-engine/src/index.ts
++++ b/packages/bridges/codex-engine/src/index.ts
+@@ -74,6 +74,16 @@ export class CodexEngine implements Engine {
+       }
+     }
+ 
++    try {
++      parser.flush();
++    } catch (error) {
++      child.kill();
++      throw error;
++    }
++    while (queue.length > 0) {
++      yield queue.shift()!;
++    }
++
+     const exitCode = await exitPromise;
+     if (exitCode !== 0) {
+       throw new Error(`codex exec exited with code ${exitCode}: ${stderr.join("")}`);
+diff --git a/packages/engine/src/__tests__/jsonl.test.ts b/packages/engine/src/__tests__/jsonl.test.ts
+index fd60ae8..aac1b42 100644
+--- a/packages/engine/src/__tests__/jsonl.test.ts
++++ b/packages/engine/src/__tests__/jsonl.test.ts
+@@ -21,6 +21,27 @@ describe("createJsonlParser", () => {
+     ]);
+   });
+ 
++  it("flushes trailing line when stream ends without newline", () => {
++    const events: SampleEvent[] = [];
++    const parse = createJsonlParser<SampleEvent>((event) => events.push(event));
++
++    parse('{"type":"status","value":"ok"}');
++    parse.flush();
++
++    expect(events).toEqual([{ type: "status", value: "ok" }]);
++  });
++
++  it("flushes trailing line split across chunk boundary", () => {
++    const events: SampleEvent[] = [];
++    const parse = createJsonlParser<SampleEvent>((event) => events.push(event));
++
++    parse('{"type":"done","value"');
++    parse(':"yes"}');
++    parse.flush();
++
++    expect(events).toEqual([{ type: "done", value: "yes" }]);
++  });
++
+   it("ignores blank lines", () => {
+     const events: SampleEvent[] = [];
+     const parse = createJsonlParser<SampleEvent>((event) => events.push(event));
+diff --git a/packages/engine/src/jsonl.ts b/packages/engine/src/jsonl.ts
+index 41e219d..98fac00 100644
+--- a/packages/engine/src/jsonl.ts
++++ b/packages/engine/src/jsonl.ts
+@@ -7,14 +7,19 @@ export class JsonlParseError extends Error {
+ 
+ export type JsonlValueHandler<T> = (value: T) => void;
+ 
++export interface JsonlParser<T> {
++  (chunk: Buffer | string): void;
++  flush(): void;
++}
++
+ /**
+  * Creates a streaming JSONL parser that can ingest buffers of arbitrary size and
+  * emit parsed objects whenever a full line is available.
+  */
+-export function createJsonlParser<T>(onValue: JsonlValueHandler<T>) {
++export function createJsonlParser<T>(onValue: JsonlValueHandler<T>): JsonlParser<T> {
+   let buffer = "";
+ 
+-  return (chunk: Buffer | string) => {
++  const parse: JsonlParser<T> = ((chunk: Buffer | string) => {
+     buffer += chunk.toString();
+ 
+     while (true) {
+@@ -39,5 +44,25 @@ export function createJsonlParser<T>(onValue: JsonlValueHandler<T>) {
+         );
+       }
+     }
++  }) as JsonlParser<T>;
++
++  parse.flush = () => {
++    const line = buffer.trim();
++    buffer = "";
++
++    if (!line) {
++      return;
++    }
++
++    try {
++      onValue(JSON.parse(line) as T);
++    } catch (error) {
++      throw new JsonlParseError(
++        `Failed to parse JSONL line: ${(error as Error).message}`,
++        line,
++      );
++    }
+   };
++
++  return parse;
+ }
+diff --git a/tools/engine-smoke.ts b/tools/engine-smoke.ts
+index 80ebc72..d6f3b6e 100755
+--- a/tools/engine-smoke.ts
++++ b/tools/engine-smoke.ts
+@@ -1,15 +1,22 @@
+ #!/usr/bin/env tsx
+ import process from "node:process";
+ 
+-import { createEngineFromEnv } from "@ade/engine";
++import { createEngineFromEnv, type ExecEvent } from "@ade/engine";
+ 
+ async function main() {
+   const engine = createEngineFromEnv();
+   const events = engine.exec({ prompt: "hello" });
++  let lastEvent: ExecEvent | undefined;
+ 
+   try {
+     for await (const event of events) {
+       process.stdout.write(`${JSON.stringify(event)}\n`);
++      lastEvent = event;
++    }
++    if (lastEvent) {
++      const maybeId = (lastEvent as { id?: string }).id;
++      const label = maybeId ? `${lastEvent.type}:${maybeId}` : lastEvent.type;
++      process.stderr.write(`Final event: ${label}\n`);
+     }
+   } catch (error) {
+     console.error((error as Error).message);

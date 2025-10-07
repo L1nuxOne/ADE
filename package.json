@@ -7,8 +7,17 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "pnpm -r build || echo no-build",
-    "test": "pnpm -r test || echo no-tests",
-    "dev": "echo 'ADE dev placeholder (add apps/ade-tauri next)'"
+    "build": "pnpm -r --filter '@ade/*' build || echo no-build",
+    "test": "vitest run || echo no-tests",
+    "dev": "echo 'ADE dev placeholder (add apps/ade-tauri next)'",
+    "smoke:engine": "bash scripts/cloud/env.sh && tsx tools/engine-smoke.ts",
+    "smoke:cloud": "ade-cloud list --json || true"
+  },
+  "devDependencies": {
+    "@ade/cloud-shim": "workspace:*",
+    "@types/node": "^20.11.30",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.5",
+    "vitest": "^1.5.0"
   }
 }

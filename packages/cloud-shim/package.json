@@ -1,0 +1,19 @@
+{
+  "name": "@ade/cloud-shim",
+  "version": "0.0.1",
+  "private": false,
+  "main": "dist/client.js",
+  "types": "dist/client.d.ts",
+  "bin": {
+    "ade-cloud": "dist/cli.js"
+  },
+  "files": ["dist", "README.md", "fixtures"],
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf dist",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ade/engine": "workspace:*"
+  }
+}
