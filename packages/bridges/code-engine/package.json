@@ -1,0 +1,17 @@
+{
+  "name": "@ade/code-engine",
+  "version": "0.0.1",
+  "private": false,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@ade/bridge-shared": "workspace:*",
+    "@ade/cloud-shim": "workspace:*",
+    "@ade/engine": "workspace:*"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "task-123",
+  "title": "Sample Refactor",
+  "status": "pending",
+  "updatedAt": "2024-01-01T12:00:00.000Z",
+  "description": "Demonstration task for fixture mode.",
+  "conversation": [
+    {
+      "role": "system",
+      "content": "Welcome to ADE fixture mode."
+    },
+    {
+      "role": "user",
+      "content": "Please refactor the sample code."
+    },
+    {
+      "role": "assistant",
+      "content": "Sure thing!"
+    }
+  ],
+  "metadata": {
+    "fixture": true
+  },
+  "diff": "--- a/sample.txt\n+++ b/sample.txt\n@@\n-Hello\n+Hello, world!\n"
+}
