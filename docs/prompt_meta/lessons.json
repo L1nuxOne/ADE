@@ -3,12 +3,12 @@
     {
       "id": "L-pty-resize",
       "applies_to": {
-        "milestones": [
-          "M1"
-        ],
         "tags": [
           "terminals",
           "pty"
+        ],
+        "tasks": [
+          "m1-01.terminals"
         ]
       },
       "pointers": [
@@ -19,12 +19,12 @@
     {
       "id": "L-xterm-basics",
       "applies_to": {
-        "milestones": [
-          "M1"
-        ],
         "tags": [
           "terminals",
           "ui"
+        ],
+        "tasks": [
+          "m1-01.terminals"
         ]
       },
       "pointers": [

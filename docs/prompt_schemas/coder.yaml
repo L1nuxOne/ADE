@@ -12,6 +12,11 @@ user: |
   {{DESIGN_INTENT_CONTENT}}
   --------------------------------
 
+  GUIDELINES
+  --------------------------------
+  {{POINTERS}}
+  --------------------------------
+
   Deliverables:
   1) Code changes that satisfy all MUST items (SHOULD/NICE if time permits).
   2) Report file saved at: .codex-cloud/report.json  (create the folder if needed)
