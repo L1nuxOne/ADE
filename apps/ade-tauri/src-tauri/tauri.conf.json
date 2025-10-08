@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "build": {
+    "beforeDevCommand": "pnpm --filter @ade/tauri-app dev",
+    "beforeBuildCommand": "pnpm --filter @ade/tauri-app build",
+    "devPath": "http://localhost:5173",
+    "distDir": "../dist"
+  },
+  "package": {
+    "productName": "ADE",
+    "version": "0.1.0"
+  },
+  "tauri": {
+    "bundle": {
+      "active": false
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "resizable": true,
+        "title": "ADE Terminals"
+      }
+    ]
+  }
+}
