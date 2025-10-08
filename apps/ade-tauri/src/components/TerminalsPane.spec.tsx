@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { vi, type Mock } from 'vitest';
+import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 import TerminalsPane from './TerminalsPane';
 
 vi.mock('../hooks/useTerminal', () => ({
@@ -66,15 +66,21 @@ describe('TerminalsPane', () => {
   });
 
   it('sends an interrupt when the button is pressed', async () => {
-    const sendInterrupt = vi.fn().mockResolvedValue(undefined);
-    mockedUseTerminal
-      .mockReturnValueOnce(snapshot({ sendInterrupt }))
-      .mockReturnValueOnce(snapshot({ shellLabel: 'engine', supportsWsl: false }));
+    let latestMe: TerminalSnapshot | undefined;
+    mockedUseTerminal.mockImplementation(({ id }: { id: string }) => {
+      if (id === 'me') {
+        latestMe = snapshot();
+        return latestMe;
+      }
+      return snapshot({ shellLabel: 'engine', supportsWsl: false });
+    });
 
     render(<TerminalsPane handlers={baseHandlers} />);
 
-    await screen.findByRole('button', { name: /Send Ctrl\+C/i });
-    screen.getByRole('button', { name: /Send Ctrl\+C/i }).click();
-    expect(sendInterrupt).toHaveBeenCalledTimes(1);
+    const buttons = await screen.findAllByRole('button', { name: /Send Ctrl\+C/i });
+    const target = buttons.at(-1) as HTMLButtonElement | undefined;
+    expect(target).toBeDefined();
+    target?.click();
+    expect(latestMe?.sendInterrupt).toHaveBeenCalledTimes(1);
   });
 });
