@@ -8,8 +8,8 @@
 // Human-editable: docs/plan/ade.plan.yaml (optional; not parsed here).
 
 import { spawn } from "node:child_process";
-import { readFileSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { readFileSync, existsSync, mkdirSync, writeFileSync, copyFileSync } from "node:fs";
+import { join, resolve, dirname } from "node:path";
 import process from "node:process";
 
 function log(...a){ console.log("[orchestrator]", ...a); }
@@ -165,9 +165,8 @@ async function fetchArtifacts(){
 function allVariantArtifactsPresent(){
   try {
     for(const v of variants){
-      const reportPath = join(outDir, v, "report.json");
       const patchPath = join(outDir, v, "diff.patch");
-      if(!existsSync(reportPath) || !existsSync(patchPath)) return false;
+      if(!existsSync(patchPath)) return false;
     }
     return true;
   } catch { return false; }
@@ -195,6 +194,14 @@ for(const v of variants){
   await runCmd(cmdAdd);
   const cmdApply = `(cd ${wt} && git apply --3way ${patch})`;
   await runCmd(cmdApply);
+  const reportSrc = join(wt, 'docs', 'report.json');
+  const reportDest = join(outDir, v, 'report.json');
+  if (existsSync(reportSrc)) {
+    mkdirSync(dirname(reportDest), { recursive: true });
+    copyFileSync(reportSrc, reportDest);
+  } else {
+    log('Report not found for', v, '- expected at', reportSrc);
+  }
 }
 
 // STEP 4: meta-review
