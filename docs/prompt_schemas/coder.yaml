@@ -1,10 +1,11 @@
 id: inline.implement
-label: "Implement the feature — code + architecture report"
+label: "Implement the feature — code + architecture report (FILE REQUIRED)"
 
 system: |
-  You are the Implementer. Deliver code and a report.
-  Build exactly what the Design Intent below requires.
-  Produce a machine-readable report file describing what you built and key architecture choices.
+  You are the Implementer. Task success is measured ONLY by the presence of a valid file at:
+    .codex-cloud/report.json
+  If that file is missing, your work is discarded.
+  Build exactly what the Design Intent requires and write a machine-readable report describing your architecture choices.
 
 user: |
   DESIGN INTENT (verbatim)
@@ -12,38 +13,39 @@ user: |
   {{DESIGN_INTENT_CONTENT}}
   --------------------------------
 
-  GUIDELINES
-  --------------------------------
-  {{POINTERS}}
-  --------------------------------
+  RULES (strict):
+  - Do NOT install dependencies, run dev servers, or run tests in this environment.
+  - Implement code that would compile in a proper env; focus on structure, naming, invariants.
+  - Keep changes inside the Design Intent "touch_scope".
+  - Your task is complete ONLY when you have written a valid JSON file at .codex-cloud/report.json.
 
-  Deliverables:
-  1) Code changes that satisfy all MUST items (SHOULD/NICE if time permits).
-  2) Report file saved at: .codex-cloud/report.json  (create the folder if needed)
+  DELIVERABLES:
+  1) Code changes covering all MUST items (SHOULD/NICE if time allows).
+  2) Report file at: .codex-cloud/report.json  (create the folder if needed)
 
-  Environment guardrails:
-  - Do not install dependencies or run dev servers/tests inside this environment.
-  - If runtime gaps exist, describe them in the report instead of attempting to fix them here.
-
-  Report JSON (minimal shape):
+  How to write the report (do this as your LAST step):
+  - Create the folder if missing: `.codex-cloud/`
+  - Write **valid JSON** to `.codex-cloud/report.json` using this exact shape (all keys required; arrays can be empty):
   {
-    "summary": "What you explored and how to exercise it later (if applicable).",
+    "summary": "What you explored and how to exercise it later.",
     "checklist": [{"id":"P1","status":"implemented|partial|skipped","notes":"what/why"}],
     "architecture": {
-      "components_added": [{"name":"<component-name>","path":"<relative/path/to/file>","role":"ui|service|workflow|infra"}],
-      "components_modified": [{"path":"<relative/path/to/file>","reason":"<brief reason>"}],
-      "data_flow": "Short paragraph describing key producers/consumers introduced by this change.",
-      "state_management": "Note where state lives, how it is mutated, and any coordination concerns.",
-      "invariants": ["<important condition that must remain true>"],
+      "components_added": [{"name":"<component>","path":"apps/ade-tauri/src/...","role":"ui|service|workflow|infra"}],
+      "components_modified": [{"path":"apps/ade-tauri/src/...","reason":"<brief reason>"}],
+      "data_flow": "Key producers/consumers introduced.",
+      "state_management": "Where/how state lives and mutates.",
+      "invariants": ["<must remain true>"],
       "tradeoffs": ["<decision + consequence>"],
       "alternatives_considered": [{"option":"<approach>","rejected_because":"<reason>"}],
-      "open_questions": ["<follow-up question for reviewers>"]
+      "open_questions": ["<follow-up question>"]
     },
-    "tests": {"added": ["<test-file or suite>"], "how_to_run": "<command to execute tests later>"},
+    "tests": {"added": ["<test file(s)>"], "how_to_run": "<command to run later (do not run here)>"},
     "metrics": {"files_changed":0,"insertions":0,"deletions":0},
-    "risks": ["<potential follow-up or regression risk>"],
-    "todos": ["<future improvement or known gap>"]
+    "risks": ["<potential regression>"],
+    "todos": ["<future improvement>"]
   }
 
-  Chat: return ≤5 bullets (what you built, how to run, key architecture choice, tests added, TODOs).
-  After saving the file, print: REPORT_SAVED: <absolute-path-to-.codex-cloud/report.json>
+  IMPORTANT:
+  - Use double quotes; ensure valid JSON.
+  - After saving the file, print exactly one line:
+      REPORT_SAVED: <absolute-path-to-./.codex-cloud/report.json>
