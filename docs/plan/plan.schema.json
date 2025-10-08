@@ -116,6 +116,9 @@
           },
           "owner": {
             "type": "string"
+          },
+          "evaluation_mode": {
+            "type": "string"
           }
         },
         "required": [
@@ -125,6 +128,26 @@
           "kind",
           "status"
         ]
+      }
+    },
+    "evaluation_modes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "enforce_build": {
+            "type": "boolean"
+          },
+          "enforce_tests": {
+            "type": "boolean"
+          },
+          "require_code_patch": {
+            "type": "boolean"
+          },
+          "require_report": {
+            "type": "boolean"
+          }
+        }
       }
     }
   },

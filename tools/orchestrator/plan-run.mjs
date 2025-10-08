@@ -100,6 +100,11 @@ const task = plan.tasks.find(t => t.id === taskId);
 if(!task){ err("Unknown task id:", taskId); process.exit(1); }
 if(task.kind !== "bo4_pipeline"){ err("Task kind is not bo4_pipeline:", task.kind); process.exit(1); }
 
+const evaluationModes = plan.evaluation_modes || {};
+const modeName = task.evaluation_mode || 'shipping';
+const modeConfig = evaluationModes[modeName] || {};
+const conceptual = modeConfig.enforce_build === false && modeConfig.enforce_tests === false;
+
 const runId = task.id;
 const outDir = task.out_dir || join(meta.out_root || ".codex-cloud", runId);
 const worktreesRoot = join(repoRoot, (meta.worktrees_root || "../_bo4"), runId);
@@ -113,6 +118,7 @@ log("Out dir:", outDir);
 log("Worktrees root:", worktreesRoot);
 log("Best-of:", bestOf, "Base:", baseBranch);
 if(reuseTask) log("Reusing cloud task id:", reuseTask);
+log("Evaluation mode:", modeName, conceptual ? '(conceptual)' : '(shipping)');
 
 if(dryRun){
   console.log("Dry-run mode. No commands executed.");
@@ -209,8 +215,12 @@ const cmdTransplant = [
 await runCmd(cmdTransplant);
 
 // STEP 6: verify locally
-await runCmd("pnpm build && pnpm test");
-log("Task completed:", runId);
+if(conceptual){
+  log('Skipping build/test verification (conceptual mode).');
+} else {
+  await runCmd('pnpm build && pnpm test');
+}
+log('Task completed:', runId);
 
 // Update state file
 const statePath = resolve(repoRoot, ".codex-orchestrator/state.json");

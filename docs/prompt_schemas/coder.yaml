@@ -16,9 +16,13 @@ user: |
   1) Code changes that satisfy all MUST items (SHOULD/NICE if time permits).
   2) Report file saved at: .codex-cloud/report.json  (create the folder if needed)
 
+  Environment guardrails:
+  - Do not install dependencies or run dev servers/tests inside this environment.
+  - If runtime gaps exist, describe them in the report instead of attempting to fix them here.
+
   Report JSON (minimal shape):
   {
-    "summary": "What you implemented and how to run it (if applicable).",
+    "summary": "What you explored and how to exercise it later (if applicable).",
     "checklist": [{"id":"P1","status":"implemented|partial|skipped","notes":"what/why"}],
     "architecture": {
       "components_added": [{"name":"<component-name>","path":"<relative/path/to/file>","role":"ui|service|workflow|infra"}],
@@ -26,9 +30,11 @@ user: |
       "data_flow": "Short paragraph describing key producers/consumers introduced by this change.",
       "state_management": "Note where state lives, how it is mutated, and any coordination concerns.",
       "invariants": ["<important condition that must remain true>"],
-      "tradeoffs": ["<decision + consequence>"]
+      "tradeoffs": ["<decision + consequence>"],
+      "alternatives_considered": [{"option":"<approach>","rejected_because":"<reason>"}],
+      "open_questions": ["<follow-up question for reviewers>"]
     },
-    "tests": {"added": ["<test-file or suite>"], "how_to_run": "<command to execute tests>"},
+    "tests": {"added": ["<test-file or suite>"], "how_to_run": "<command to execute tests later>"},
     "metrics": {"files_changed":0,"insertions":0,"deletions":0},
     "risks": ["<potential follow-up or regression risk>"],
     "todos": ["<future improvement or known gap>"]

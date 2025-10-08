@@ -4,7 +4,11 @@
     "No submodules or destructive git history changes.",
     "Respect the Design Intent 'touch_scope': implement only in allowed paths; avoid paths listed under 'avoid'.",
     "Prefer minimal, composable changes; keep diffs small.",
-    "If something blocks, implement the closest viable subset and document the gap in the report (do not bail)."
+    "If something blocks, implement the closest viable subset and document the gap in the report (do not bail).",
+    "Optimize for architectural clarity and conceptual soundness; do NOT try to ship a runnable build here.",
+    "Implement code that would compile in a proper env, but do not run servers or tests in this environment.",
+    "Focus on structure, naming, invariants, and write your reasoning in .codex-cloud/report.json.",
+    "No installs, no dev servers, no test execution."
   ],
   "defaults": {
     "prohibited_paths": [

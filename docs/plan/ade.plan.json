@@ -24,7 +24,7 @@
   "tasks": [
     {
       "id": "m0-01.engine",
-      "title": "M0 — Engine Abstraction (code/codex/stub)",
+      "title": "M0 \u2014 Engine Abstraction (code/codex/stub)",
       "milestone": "M0",
       "kind": "polish_local",
       "status": "done",
@@ -32,7 +32,7 @@
     },
     {
       "id": "m0-02.jsonl-flush",
-      "title": "M0 — Fix JSONL EOF flush + tests",
+      "title": "M0 \u2014 Fix JSONL EOF flush + tests",
       "milestone": "M0",
       "kind": "polish_local",
       "status": "pending",
@@ -40,51 +40,55 @@
     },
     {
       "id": "m1-01.terminals",
-      "title": "M1-01 — Terminals (Me + Engine)",
+      "title": "M1-01 \u2014 Terminals (Me + Engine)",
       "milestone": "M1",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m1.terminals.yaml",
       "out_dir": ".codex-cloud/m1-01-terminals",
       "finalize_branch": "bo4/m1-01/winner",
       "status": "pending",
-      "owner": "orchestrator"
+      "owner": "orchestrator",
+      "evaluation_mode": "conceptual"
     },
     {
       "id": "m1-02.files",
-      "title": "M1-02 — File Explorer",
+      "title": "M1-02 \u2014 File Explorer",
       "milestone": "M1",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m1.files.yaml",
       "out_dir": ".codex-cloud/m1-02-files",
       "finalize_branch": "bo4/m1-02/winner",
       "status": "pending",
-      "owner": "orchestrator"
+      "owner": "orchestrator",
+      "evaluation_mode": "conceptual"
     },
     {
       "id": "m1-03.concepts",
-      "title": "M1-03 — Concept Explorer (bootstrap)",
+      "title": "M1-03 \u2014 Concept Explorer (bootstrap)",
       "milestone": "M1",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m1.concepts.yaml",
       "out_dir": ".codex-cloud/m1-03-concepts",
       "finalize_branch": "bo4/m1-03/winner",
       "status": "pending",
-      "owner": "orchestrator"
+      "owner": "orchestrator",
+      "evaluation_mode": "conceptual"
     },
     {
       "id": "m1-04.layout",
-      "title": "M1-04 — Settings & Layout",
+      "title": "M1-04 \u2014 Settings & Layout",
       "milestone": "M1",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m1.layout.yaml",
       "out_dir": ".codex-cloud/m1-04-layout",
       "finalize_branch": "bo4/m1-04/winner",
       "status": "pending",
-      "owner": "orchestrator"
+      "owner": "orchestrator",
+      "evaluation_mode": "conceptual"
     },
     {
       "id": "m2-01.detectors",
-      "title": "M2-01 — L1 Detectors (6 kinds)",
+      "title": "M2-01 \u2014 L1 Detectors (6 kinds)",
       "milestone": "M2",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m2.detectors.yaml",
@@ -98,7 +102,7 @@
     },
     {
       "id": "m2-02.crosswalk",
-      "title": "M2-02 — Crosswalk & Reconciliation",
+      "title": "M2-02 \u2014 Crosswalk & Reconciliation",
       "milestone": "M2",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m2.crosswalk.yaml",
@@ -112,7 +116,7 @@
     },
     {
       "id": "m2-03.l1-suite",
-      "title": "M2-03 — L1 Suite Runner (param by L2)",
+      "title": "M2-03 \u2014 L1 Suite Runner (param by L2)",
       "milestone": "M2",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m2.l1suite.yaml",
@@ -123,7 +127,7 @@
     },
     {
       "id": "m2-04.oracles",
-      "title": "M2-04 — TF-Lang Oracles",
+      "title": "M2-04 \u2014 TF-Lang Oracles",
       "milestone": "M2",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m2.oracles.yaml",
@@ -134,7 +138,7 @@
     },
     {
       "id": "m3-01.conceptual-diff",
-      "title": "M3-01 — Conceptual Diff",
+      "title": "M3-01 \u2014 Conceptual Diff",
       "milestone": "M3",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m3.conceptualdiff.yaml",
@@ -145,7 +149,7 @@
     },
     {
       "id": "m3-02.github-mcp",
-      "title": "M3-02 — GitHub MCP (read-only)",
+      "title": "M3-02 \u2014 GitHub MCP (read-only)",
       "milestone": "M3",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m3.githubmcp.yaml",
@@ -156,7 +160,7 @@
     },
     {
       "id": "m3-03.workflow-runner",
-      "title": "M3-03 — Workflow Runner (YAML)",
+      "title": "M3-03 \u2014 Workflow Runner (YAML)",
       "milestone": "M3",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m3.workflow.yaml",
@@ -167,7 +171,7 @@
     },
     {
       "id": "m3-04.cloud-bridge",
-      "title": "M3-04 — Cloud BO4 Bridge + Apply",
+      "title": "M3-04 \u2014 Cloud BO4 Bridge + Apply",
       "milestone": "M3",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m3.cloudbridge.yaml",
@@ -178,7 +182,7 @@
     },
     {
       "id": "m3-05.worktrees-matrix",
-      "title": "M3-05 — Worktrees + Test Matrix",
+      "title": "M3-05 \u2014 Worktrees + Test Matrix",
       "milestone": "M3",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m3.worktrees.yaml",
@@ -189,7 +193,7 @@
     },
     {
       "id": "m4-01.guardrails",
-      "title": "M4-01 — Guardrails Panel",
+      "title": "M4-01 \u2014 Guardrails Panel",
       "milestone": "M4",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m4.guardrails.yaml",
@@ -200,7 +204,7 @@
     },
     {
       "id": "m4-02.cdp-safety",
-      "title": "M4-02 — CDP Safety Defaults",
+      "title": "M4-02 \u2014 CDP Safety Defaults",
       "milestone": "M4",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m4.cdpsafety.yaml",
@@ -211,7 +215,7 @@
     },
     {
       "id": "m4-03.cards-from-evidence",
-      "title": "M4-03 — Add L2 Card from Evidence",
+      "title": "M4-03 \u2014 Add L2 Card from Evidence",
       "milestone": "M4",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m4.cards.yaml",
@@ -222,7 +226,7 @@
     },
     {
       "id": "m4-04.pr-concept-health",
-      "title": "M4-04 — PR Concept Health Comment",
+      "title": "M4-04 \u2014 PR Concept Health Comment",
       "milestone": "M4",
       "kind": "bo4_pipeline",
       "design_intent": "docs/design_intent/ade.m4.prhealth.yaml",
@@ -231,5 +235,19 @@
       "status": "pending",
       "owner": "orchestrator"
     }
-  ]
+  ],
+  "evaluation_modes": {
+    "conceptual": {
+      "enforce_build": false,
+      "enforce_tests": false,
+      "require_code_patch": true,
+      "require_report": true
+    },
+    "shipping": {
+      "enforce_build": true,
+      "enforce_tests": true,
+      "require_code_patch": true,
+      "require_report": true
+    }
+  }
 }
