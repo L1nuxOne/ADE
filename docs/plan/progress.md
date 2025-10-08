@@ -5,8 +5,8 @@ This file lists the current status of BO4 tasks so every agent knows what is in 
 | Task ID            | Title                                  | Stage        | Notes |
 |--------------------|----------------------------------------|--------------|-------|
 | m0-01.engine        | M0 — Engine Abstraction                | ✅ done       | Meta report: `.codex-cloud/m0-01-engine/meta/meta_report.json`
-| m1-01.terminals     | M1-01 — Terminals (Me + Engine)        | ⏳ pending    | Next BO4 run |
-| m1-02.files         | M1-02 — File Explorer                  | ⏳ queued     | |
+| m1-01.terminals     | M1-01 — Terminals (Me + Engine)        | ✅ done       | Winner merged; meta: `.codex-cloud/m1-01-terminals/meta/winner.report.json` |
+| m1-02.files         | M1-02 — File Explorer                  | ⏳ pending    | Prompt ready: `.codex-cloud/m1-02-files/meta/coder_prompt.yaml` |
 | m1-03.concepts      | M1-03 — Concept Explorer (bootstrap)   | ⏳ queued     | |
 | m1-04.layout        | M1-04 — Settings & Layout              | ⏳ queued     | |
 | m2-01.detectors     | M2-01 — L1 Detectors (6 kinds)         | ⏳ queued     | depends on m1-03 |
