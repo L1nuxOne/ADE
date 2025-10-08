@@ -22,20 +22,12 @@ export const Toast = ({ toast, onDismiss }: ToastProps) => {
       <p className="toast__message">{toast.message}</p>
       <button
         type="button"
-        aria-label="Dismiss notification"
+        className="toast__dismiss"
+        aria-label="Dismiss toast"
         onClick={() => onDismiss(toast.id)}
-        style={{
-          position: 'absolute',
-          top: '0.35rem',
-          right: '0.5rem',
-          background: 'transparent',
-          color: 'var(--text-muted)',
-          border: 'none',
-          cursor: 'pointer',
-          fontSize: '0.75rem',
-        }}
+        title="Dismiss"
       >
-        ✕
+        ×
       </button>
     </div>
   );

@@ -34,15 +34,12 @@ interface UseTerminalOptions {
 }
 
 const base64ToString = (chunk: string) => {
+  const bin = atob(chunk);
   try {
-    return decodeURIComponent(
-      atob(chunk)
-        .split('')
-        .map((c) => `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`)
-        .join(''),
-    );
+    const bytes = Uint8Array.from(bin, (char) => char.charCodeAt(0));
+    return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
   } catch (_error) {
-    return atob(chunk);
+    return bin;
   }
 };
 
@@ -216,8 +213,9 @@ export const useTerminal = ({ id, mode, onError, onInfo, useWsl }: UseTerminalOp
     };
   }, [emitResize, enqueue, id, mode, onError, onInfo]);
 
+  // Initialize xterm and related listeners; cleanup prevents StrictMode leaks.
   useEffect(() => {
-    configureTerminal();
+    return configureTerminal();
   }, [configureTerminal]);
 
   const startEngine = useCallback(async () => {

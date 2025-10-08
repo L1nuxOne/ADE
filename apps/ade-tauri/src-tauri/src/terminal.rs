@@ -145,11 +145,8 @@ impl PtyEntry {
     }
 
     fn wait_exit(&self) -> Option<ExitStatus> {
-        match self.child.lock().try_wait() {
-            Ok(Some(status)) => Some(status),
-            Ok(None) => self.child.lock().wait().ok(),
-            Err(_) => None,
-        }
+        // Blocking wait is acceptable here—if the process already exited, this returns immediately.
+        self.child.lock().wait().ok()
     }
 }
 

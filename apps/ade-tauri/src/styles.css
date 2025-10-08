@@ -178,6 +178,23 @@ body {
   color: var(--text-muted);
 }
 
+.toast__dismiss {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.5rem;
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0;
+}
+
+.toast__dismiss:hover,
+.toast__dismiss:focus-visible {
+  color: var(--text);
+}
+
 .terminal-meta {
   display: flex;
   gap: 0.75rem;
