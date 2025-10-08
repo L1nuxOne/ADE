@@ -93,6 +93,25 @@ const defaults = {
   base_branch: meta.base_branch ?? "main"
 };
 
+function promptPathFromId(promptId){
+  const fileName = promptId.replace(/\./g, "-") + ".yaml";
+  return resolve(repoRoot, "docs/bo4/prompts", fileName);
+}
+
+function renderPromptTemplate(promptId, replacements){
+  const promptPath = promptPathFromId(promptId);
+  if(!existsSync(promptPath)){
+    err("Prompt template not found:", promptPath);
+    process.exit(2);
+  }
+  let tpl = readFileSync(promptPath, "utf8");
+  for (const [key, value] of Object.entries(replacements)) {
+    const pattern = new RegExp(`{{${key}}}`, 'g');
+    tpl = tpl.replace(pattern, value);
+  }
+  return tpl;
+}
+
 bestOf = bestOf ?? defaults.best_of;
 baseBranch = baseBranch ?? defaults.base_branch;
 
@@ -159,20 +178,20 @@ if(!cloudTaskId){
 // STEP 2: fetch artifacts (poll until 4 variant patch files exist)
 const variants = ["var1","var2","var3","var4"];
 async function fetchArtifacts(){
-  const cmdFetch = `codex cloud fetch --task ${cloudTaskId} --out ${outDir}`;
+  const cmdFetch = `codex cloud export ${cloudTaskId} --all --dir ${outDir}`;
   await runCmd(cmdFetch);
 }
 function allVariantArtifactsPresent(){
   try {
     for(const v of variants){
-      const patchPath = join(outDir, v, "diff.patch");
+      const patchPath = join(outDir, v, 'patch.diff');
       if(!existsSync(patchPath)) return false;
     }
     return true;
   } catch { return false; }
 }
 
-log("Fetching artifacts (polling until reports and patches are present)...");
+log("Fetching artifacts (polling until patches are present)...");
 let attempts = 0;
 while(attempts < 60){ // ~10-15 minutes max depending on poll delay
   await fetchArtifacts();
@@ -181,7 +200,7 @@ while(attempts < 60){ // ~10-15 minutes max depending on poll delay
   await new Promise(r => setTimeout(r, 10000)); // 10s
 }
 if(!allVariantArtifactsPresent()){
-  err("Timed out waiting for variant artifacts (report.json + diff.patch). Check cloud task status:", cloudTaskId);
+  err("Timed out waiting for variant patches. Check cloud task status:", cloudTaskId);
   process.exit(2);
 }
 
@@ -189,13 +208,13 @@ if(!allVariantArtifactsPresent()){
 for(const v of variants){
   const wt = join(worktreesRoot, v);
   const br = `${workBranchPrefix}/${v}`;
-  const patch = join(outDir, v, "diff.patch");
+  const patch = resolve(repoRoot, outDir, v, "patch.diff");
   const cmdAdd = `git worktree add ${wt} -b ${br} ${baseBranch}`;
   await runCmd(cmdAdd);
   const cmdApply = `(cd ${wt} && git apply --3way ${patch})`;
   await runCmd(cmdApply);
   const reportSrc = join(wt, 'docs', 'report.json');
-  const reportDest = join(outDir, v, 'report.json');
+  const reportDest = resolve(repoRoot, outDir, v, 'report.json');
   if (existsSync(reportSrc)) {
     mkdirSync(dirname(reportDest), { recursive: true });
     copyFileSync(reportSrc, reportDest);
@@ -205,21 +224,26 @@ for(const v of variants){
 }
 
 // STEP 4: meta-review
-const cmdMeta = [
-  "codex exec",
-  `--prompt ${prompts.meta_review || "bo4.meta.review"}`,
-  `--args design_intent_path=${designIntent},variants_dir=${outDir},local_worktrees_dir=${worktreesRoot}`
-].join(" ");
-await runCmd(cmdMeta);
+const metaPromptId = prompts.meta_review || "bo4.meta.review";
+const metaPromptText = renderPromptTemplate(metaPromptId, {
+  design_intent_path: designIntent,
+  variants_dir: outDir,
+  local_worktrees_dir: worktreesRoot,
+});
+const metaPromptFile = join(outDir, "meta_prompt.yaml");
+writeFileSync(metaPromptFile, metaPromptText, "utf8");
+await runCmd(`codex exec --full-auto - < ${metaPromptFile}`);
 
 // STEP 5: transplant / build composite winner
 const metaReportPath = join(outDir, "meta_report.json");
-const cmdTransplant = [
-  "codex exec",
-  `--prompt ${prompts.transplant_coder || "bo4.transplant.coder"}`,
-  `--args meta_report_path=${metaReportPath},finalize_branch=${finalizeBranch}`
-].join(" ");
-await runCmd(cmdTransplant);
+const transplantPromptId = prompts.transplant_coder || "bo4.transplant.coder";
+const transplantPromptText = renderPromptTemplate(transplantPromptId, {
+  meta_report_path: metaReportPath,
+  finalize_branch: finalizeBranch,
+});
+const transplantPromptFile = join(outDir, "transplant_prompt.yaml");
+writeFileSync(transplantPromptFile, transplantPromptText, "utf8");
+await runCmd(`codex exec --full-auto - < ${transplantPromptFile}`);
 
 // STEP 6: verify locally
 if(conceptual){
