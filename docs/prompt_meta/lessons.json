@@ -1,0 +1,51 @@
+{
+  "lessons": [
+    {
+      "id": "L-pty-resize",
+      "applies_to": {
+        "milestones": [
+          "M1"
+        ],
+        "tags": [
+          "terminals",
+          "pty"
+        ]
+      },
+      "pointers": [
+        "Handle terminal resize without crashing; ensure PTY child process gets the updated size.",
+        "Surface PTY spawn errors to the UI (toast/log) instead of failing silently."
+      ]
+    },
+    {
+      "id": "L-xterm-basics",
+      "applies_to": {
+        "milestones": [
+          "M1"
+        ],
+        "tags": [
+          "terminals",
+          "ui"
+        ]
+      },
+      "pointers": [
+        "Use xterm.js default keybindings; document deviations in the report.",
+        "Throttle write-to-terminal to avoid UI jank on large outputs."
+      ]
+    },
+    {
+      "id": "L-detectors-scope",
+      "applies_to": {
+        "milestones": [
+          "M2"
+        ],
+        "tags": [
+          "detectors"
+        ]
+      },
+      "pointers": [
+        "Exclude obvious false positives via negative ripgrep rules (e.g., vendor directories).",
+        "Emit evidence spans as byte offsets and include a short 'reason' string per match."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "rules": [
+    "Do not modify pnpm-lock.yaml; if dependencies are needed, list them under 'todos' in the report.",
+    "No submodules or destructive git history changes.",
+    "Respect the Design Intent 'touch_scope': implement only in allowed paths; avoid paths listed under 'avoid'.",
+    "Prefer minimal, composable changes; keep diffs small.",
+    "If something blocks, implement the closest viable subset and document the gap in the report (do not bail)."
+  ],
+  "defaults": {
+    "prohibited_paths": [
+      "legacy/**"
+    ]
+  }
+}

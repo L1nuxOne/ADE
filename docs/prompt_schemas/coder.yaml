@@ -1,0 +1,38 @@
+id: inline.implement
+label: "Implement the feature — code + architecture report"
+
+system: |
+  You are the Implementer. Deliver code and a report.
+  Build exactly what the Design Intent below requires.
+  Produce a machine-readable report file describing what you built and key architecture choices.
+
+user: |
+  DESIGN INTENT (verbatim)
+  --------------------------------
+  {{DESIGN_INTENT_CONTENT}}
+  --------------------------------
+
+  Deliverables:
+  1) Code changes that satisfy all MUST items (SHOULD/NICE if time permits).
+  2) Report file saved at: .codex-cloud/report.json  (create the folder if needed)
+
+  Report JSON (minimal shape):
+  {
+    "summary": "What you implemented and how to run it (if applicable).",
+    "checklist": [{"id":"P1","status":"implemented|partial|skipped","notes":"what/why"}],
+    "architecture": {
+      "components_added": [{"name":"<component-name>","path":"<relative/path/to/file>","role":"ui|service|workflow|infra"}],
+      "components_modified": [{"path":"<relative/path/to/file>","reason":"<brief reason>"}],
+      "data_flow": "Short paragraph describing key producers/consumers introduced by this change.",
+      "state_management": "Note where state lives, how it is mutated, and any coordination concerns.",
+      "invariants": ["<important condition that must remain true>"],
+      "tradeoffs": ["<decision + consequence>"]
+    },
+    "tests": {"added": ["<test-file or suite>"], "how_to_run": "<command to execute tests>"},
+    "metrics": {"files_changed":0,"insertions":0,"deletions":0},
+    "risks": ["<potential follow-up or regression risk>"],
+    "todos": ["<future improvement or known gap>"]
+  }
+
+  Chat: return ≤5 bullets (what you built, how to run, key architecture choice, tests added, TODOs).
+  After saving the file, print: REPORT_SAVED: <absolute-path-to-.codex-cloud/report.json>
